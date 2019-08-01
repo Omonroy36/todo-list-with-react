@@ -2,24 +2,48 @@ import React from "react";
 
 //include images into your bundle
 import rigoImage from "../../img/rigo-baby.jpg";
+import { Tareas } from "./tareas";
 
 //create your first component
 export class Home extends React.Component {
+	constructor() {
+		super();
+
+		this.state = {
+			tareas: [],
+			tarea: ""
+		};
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
+	}
+
+	handleChange(e) {
+		this.setState({ tarea: e.target.value });
+	}
+	handleSubmit(e) {
+		e.preventDefault();
+		this.setState({
+			tareas: this.state.tareas.concat(this.state.tarea),
+			tarea: ""
+		});
+	}
 	render() {
 		return (
-			<div className="text-center mt-5">
-				<h1>Hello Rigo!</h1>
-				<p>
-					<img src={rigoImage} />
-				</p>
-				<a href="#" className="btn btn-success">
-					If you see this green button... bootstrap is working
-				</a>
-				<p>
-					Made by{" "}
-					<a href="http://www.4geeksacademy.com">4Geeks Academy</a>,
-					with love!
-				</p>
+			<div>
+				<form onSubmit={this.handleSubmit}>
+					<h1>TODOLIST</h1>
+					<input
+						type="text"
+						value={this.state.tarea}
+						name="tarea"
+						onChange={this.handleChange}
+					/>
+				</form>
+				<ul>
+					{this.state.tareas.map(item => (
+						<li> {item} </li>
+					))}
+				</ul>
 			</div>
 		);
 	}
