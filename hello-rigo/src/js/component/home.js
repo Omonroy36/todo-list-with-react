@@ -27,9 +27,18 @@ export class Home extends React.Component {
 			tarea: ""
 		});
 	}
+
+	deleteItem(e, i) {
+		console.log(i);
+		let { tareas } = this.state;
+		tareas.splice(i, 1);
+		this.setState({
+			tareas: tareas
+		});
+	}
 	render() {
 		return (
-			<div>
+			<div className="container text-center">
 				<form onSubmit={this.handleSubmit}>
 					<h1>TODOLIST</h1>
 					<input
@@ -40,8 +49,14 @@ export class Home extends React.Component {
 					/>
 				</form>
 				<ul>
-					{this.state.tareas.map(item => (
-						<li> {item} </li>
+					{this.state.tareas.map((item, i) => (
+						<li key={i}>
+							{" "}
+							{item}
+							<button onClick={e => this.deleteItem(e, i)}>
+								Delete
+							</button>
+						</li>
 					))}
 				</ul>
 			</div>
